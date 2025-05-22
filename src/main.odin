@@ -19,6 +19,9 @@ main :: proc() {
 	mem.arena_init(&arena, ARENA_BUFFER[:])
 	arena_allocator := mem.arena_allocator(&arena)
 
+	exit_code := 0
+	defer os.exit(exit_code)
+
 	when ODIN_DEBUG {
 		track: mem.Tracking_Allocator
 		mem.tracking_allocator_init(&track, arena_allocator)
@@ -35,10 +38,8 @@ main :: proc() {
 		}
 	}
 
-	exit_code := run(arena_allocator)
+	exit_code = run(arena_allocator)
 	free_all(arena_allocator)
-
-	os.exit(exit_code)
 }
 
 run :: proc(allocator := context.allocator) -> (exit_code: int) {
