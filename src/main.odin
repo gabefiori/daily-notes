@@ -42,7 +42,7 @@ main :: proc() {
 	free_all(arena_allocator)
 }
 
-run :: proc(allocator := context.allocator) -> (exit_code: int) {
+run :: proc(allocator: mem.Allocator) -> (exit_code: int) {
 	current_time := time.now()
 
 	root_dir := os.get_env("DAILY_NOTES_DIR", allocator)
